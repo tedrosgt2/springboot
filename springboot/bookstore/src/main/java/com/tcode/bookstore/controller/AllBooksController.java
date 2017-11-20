@@ -1,0 +1,43 @@
+package com.tcode.bookstore.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.tcode.bookstore.services.BookService;
+
+@RestController
+public class AllBooksController {
+
+	@Autowired
+	private BookService bookservice;
+	// List all Books
+	@RequestMapping("/allbooks")
+	public List<Books> allBooks() {
+		
+		return bookservice.getAllBooks();
+
+	}
+	//this for specific item
+	
+	@RequestMapping("/allbooks/{id}")
+	public Books getBook(@PathVariable String id) {		
+		return bookservice.getBook(id);
+		
+	}
+	@RequestMapping(method=RequestMethod.POST, value="/allbooks")
+	public void addBook(@RequestBody Books b) {
+	
+		bookservice.addBook(b); 
+		}
+	@RequestMapping(method=RequestMethod.PUT, value="/allbooks/{id}")
+	public void updateBook(@RequestBody Books b, @PathVariable String id ) {
+	
+		bookservice.updateBook(id, b); 
+		}
+}
